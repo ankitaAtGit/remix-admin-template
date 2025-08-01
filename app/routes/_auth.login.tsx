@@ -38,6 +38,8 @@ export async function action({ request }: ActionFunctionArgs) {
     password,
   });
 
+  console.log('data', data);
+
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });
   }
