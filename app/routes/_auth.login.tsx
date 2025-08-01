@@ -37,8 +37,11 @@ export async function action({ request }: ActionFunctionArgs) {
     email,
     password,
   });
-
-  console.log('data', data);
+  const {id, ...rest} = data.user;
+  uzera("identify", {
+    id: id,
+    userData: rest
+  });
 
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });
