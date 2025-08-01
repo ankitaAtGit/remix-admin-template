@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { redirect, json  } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
