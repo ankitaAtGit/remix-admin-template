@@ -22,10 +22,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   // ✅ Pass token to client so Supabase can auth server-side request
 const supabase = getSupabaseClient(token);
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+const {
+  data: { user },
+  error,
+} = await supabase.auth.getUser();
 
   if (error || !user) {
     return redirect("/login");
