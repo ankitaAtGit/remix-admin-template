@@ -32,14 +32,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const { id, email, role, user_metadata } = user;
 
-  return new Response(
-    JSON.stringify({
-      user: { id, email, role, metadata: user_metadata },
-    }),
-    {
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  return json({
+    user: { id, email, role, metadata: user_metadata },
+  });
 }
 
 // --------------------
@@ -60,18 +55,18 @@ export default function Dashboard() {
 
   console.log('user', user);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined" && typeof window.uzera === "function") {
-  //     uzera("identify", {
-  //       id: user.id,
-  //       userData: {
-  //         email: user.email,
-  //         role: user.role,
-  //         ...user.metadata,
-  //       },
-  //     });
-  //   }
-  // }, [user]);
+  useEffect(() => {
+  if (typeof window !== "undefined" && typeof window.uzera === "function") {
+    uzera("identify", {
+      id: user.id,
+      userData: {
+        email: user.email,
+        role: user.role,
+        ...user.metadata,
+      },
+    });
+  }
+}, [user]);
 
   return (
     <>
