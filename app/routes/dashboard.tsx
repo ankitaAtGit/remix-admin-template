@@ -58,18 +58,20 @@ export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { user } = useLoaderData<LoaderData>();
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.uzera === "function") {
-      uzera("identify", {
-        id: user.id,
-        userData: {
-          email: user.email,
-          role: user.role,
-          ...user.metadata,
-        },
-      });
-    }
-  }, [user]);
+  console.log('user', user);
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && typeof window.uzera === "function") {
+  //     uzera("identify", {
+  //       id: user.id,
+  //       userData: {
+  //         email: user.email,
+  //         role: user.role,
+  //         ...user.metadata,
+  //       },
+  //     });
+  //   }
+  // }, [user]);
 
   return (
     <>
