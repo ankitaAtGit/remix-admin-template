@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
-import { useState } from "react";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import { useEffect, useState } from "react";
 
 import MenuIcon from "~/components/icons/Menu";
 import ProfilePopup from "~/components/ProfilePopup";
@@ -9,13 +9,10 @@ import Sidebar from "~/components/Sidebar";
 import { getSession } from "~/session.server";
 import { getSupabaseClient } from "~/utils/getSupabaseClient";
 
+// --------------------
+// Server-side loader
+// --------------------
 export async function loader({ request }: LoaderFunctionArgs) {
-  try {
-    getSupabaseClient();
-  } catch (error) {
-    return redirect("/");
-  }
-
   const session = await getSession(request.headers.get("Cookie"));
   const token = session.get("__session");
 
@@ -23,11 +20,56 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return redirect("/login");
   }
 
-  return Response.json({});
+  const supabase = getSupabaseClient(token);
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return redirect("/login");
+  }
+
+  const { id, email, role, user_metadata } = user;
+
+  return new Response(
+    JSON.stringify({
+      user: { id, email, role, metadata: user_metadata },
+    }),
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 }
+
+// --------------------
+// Client component
+// --------------------
+type LoaderData = {
+  user: {
+    id: string;
+    email: string;
+    role: string;
+    metadata?: Record<string, any>;
+  };
+};
 
 export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user } = useLoaderData<LoaderData>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && typeof window.uzera === "function") {
+      uzera("identify", {
+        id: user.id,
+        userData: {
+          email: user.email,
+          role: user.role,
+          ...user.metadata,
+        },
+      });
+    }
+  }, [user]);
 
   return (
     <>
