@@ -38,7 +38,7 @@ export async function action({ request }: ActionFunctionArgs) {
     password,
   });
   const {id, ...rest} = data.user;
-  uzera("identify", {
+  window.uzera("identify", {
     id: id,
     userData: rest
   });
