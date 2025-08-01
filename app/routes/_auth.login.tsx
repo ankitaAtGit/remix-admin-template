@@ -37,12 +37,7 @@ export async function action({ request }: ActionFunctionArgs) {
     email,
     password,
   });
-  const {id, ...rest} = data.user;
-  window.uzera("identify", {
-    id: id,
-    userData: rest
-  });
-
+  
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });
   }
