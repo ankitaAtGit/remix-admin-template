@@ -30,24 +30,7 @@ export default function App() {
         <script
   dangerouslySetInnerHTML={{
     __html: `
-      var uzeraq = [];
-      function uzera(method, args) {
-        (!!uzeraMethods && uzeraMethods[method])
-          ? uzeraMethods[method](args)
-          : uzeraq.push({ method: method, args: args });
-      }
-      (function (u, z, e, r, a) {
-        if (u["a_id"]) { return; }
-        u["a_id"] = a;
-        u["dm"] = u.location.hostname;
-        u[r] = u[r] || [];
-        u[e] = {};
-        var s = z.createElement("script");
-        s.async = true;
-        s.src = "https://assets.gainserv.in/wrapper.dev.js?v=" + Date.now();
-        var t = z.getElementsByTagName("script")[0];
-        t.parentNode.insertBefore(s, t);
-      })(window, document, "uzeraMethods", "uzeraDL", "I84N7SQKE7");
+      var uzeraq = []; function uzera(method, args) { (!!uzeraMethods && uzeraMethods[method]) ? uzeraMethods[method](args) : uzeraq.push({ method: method, args: args }); } (function (u, z, e, r, a) { if (u["a_id"]) { return; } u["a_id"] = a; u["dm"] = u.location.hostname; u[r] = u[r] || []; u[e] = {}; var s = z.createElement("script"); s.async = true; s.src = "https://assets.gainserv.in/wrapper.dev.js?v=" + Date.now(); var t = z.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); })(window, document, "uzeraMethods", "uzeraDL", "L1S04GOULI")
     `,
   }}
 />
